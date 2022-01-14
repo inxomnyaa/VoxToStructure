@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VoxToStructure"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Width="Auto" Height="Auto">
+        Title="VoxToStructure" Width="400" Height="80" ResizeMode="NoResize">
     <Grid>
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -17,7 +17,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>-->
         <StackPanel Orientation="Horizontal">
-            <Label Padding="15 5" Margin="5 5">Output format:</Label>
+            <Label Padding="5 5" Margin="5 5">Output format:</Label>
             <ComboBox Name="ComboBox" Width="100" Padding="15 5" Margin="5 5">
                 <ComboBoxItem>.schematic</ComboBoxItem>
                 <ComboBoxItem>.mcstructure</ComboBoxItem>
