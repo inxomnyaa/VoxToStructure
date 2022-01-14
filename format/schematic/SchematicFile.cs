@@ -19,8 +19,8 @@ namespace VoxToStructure.format.schematic
             Voxel[] voxels = models[0].Voxels;
             Vector3 size = models[0].Size;
             Width = (Int16)size.X;
-            Height = (Int16)size.Y;
-            Length = (Int16)size.Z;
+            Height = (Int16)size.Z;
+            Length = (Int16)size.Y;
 
             byte[] blocks = new byte[Width * Height * Length];
 
@@ -29,7 +29,7 @@ namespace VoxToStructure.format.schematic
                 // Access properties of a voxel
                 Vector3 position = voxel.Position;
                 //Color color = voxels[0].Color;
-                blocks[BlockIndex(position.X, position.Y, position.Z)] = 1;//all stone for now TODO add blockid based on color
+                blocks[BlockIndex(position.X, position.Z, position.Y)] = 1;//all stone for now TODO add blockid based on color
             }
             
             var rootTag = new NbtCompound("root");
@@ -50,8 +50,7 @@ namespace VoxToStructure.format.schematic
         }
         
         private int BlockIndex(int x, int y, int z){
-            //return (y * Length + z) * Width + x;
-            return (z * Length + y) * Width + x;
+            return (y * Length + z) * Width + x;
         }
     }
 }
