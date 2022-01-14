@@ -50,7 +50,8 @@ namespace VoxToStructure.format.schematic
         }
         
         private int BlockIndex(int x, int y, int z){
-            return (y * Length + z) * Width + x;
+            //return (y * Length + z) * Width + x;
+            return (z * Length + y) * Width + x;
         }
     }
 }
