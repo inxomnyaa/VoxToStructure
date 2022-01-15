@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Microsoft.Win32;
 using VoxReader.Interfaces;
@@ -52,7 +53,7 @@ namespace VoxToStructure
                                 var output = new SchematicFile();
                                 var schematicFile = output.FromVox(vox);
                                 output.Save(schematicFile, outputPath);
-                                successful.Append("\n" + outputPath);
+                                successful.Append(Environment.NewLine + outputPath);
                                 break;
                             }
                             default:
@@ -68,13 +69,20 @@ namespace VoxToStructure
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
-                    MessageBox.Show("Conversion of " + file + " failed.\n" + e, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Debug.WriteLine("Conversion of " + file + " failed.");
+                    Debug.WriteLine(e);
+                    MessageBox.Show("Conversion of " + file + " failed." + Environment.NewLine + e, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
 
             if (successful.Length > 0)
-                MessageBox.Show("Conversion of " + successful.ToString().Count(c => c == '\n') + "/" + files.Length + " files successful, saved to:" + successful);
+            {
+                var filesSuccessful = "Conversion of " + Regex.Matches(successful.ToString(), Environment.NewLine).Count + "/" + files.Length + " files successful";
+                var savedFilesTo = "Saved files to:" + successful;
+                Debug.WriteLine(filesSuccessful);
+                Debug.WriteLine(savedFilesTo);
+                MessageBox.Show(savedFilesTo, filesSuccessful, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }
