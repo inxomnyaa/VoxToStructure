@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentWPF" Version="0.10.2" />
       <PackageReference Include="MiNET.fnbt" Version="1.0.22" />
       <PackageReference Include="VoxReader" Version="2.0.1" />
     </ItemGroup>

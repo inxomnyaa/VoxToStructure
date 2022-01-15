@@ -2,27 +2,18 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-        xmlns:local="clr-namespace:VoxToStructure"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="VoxToStructure" Width="400" Height="80" ResizeMode="NoResize">
     <Grid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>-->
         <StackPanel Orientation="Horizontal">
             <Label Padding="5 5" Margin="5 5">Output format:</Label>
             <ComboBox Name="ComboBox" Width="100" Padding="15 5" Margin="5 5">
                 <ComboBoxItem>.schematic</ComboBoxItem>
                 <ComboBoxItem>.mcstructure</ComboBoxItem>
             </ComboBox>
-            <Button Width="Auto" Padding="15 5"  Margin="5 5" Content="Select file and convert" Click="ButtonBase_OnClick"/>
+            <Button Width="Auto" Padding="15 5" Margin="5 5" Content="Select file(s) and convert"
+                    Click="ButtonBase_OnClick" />
         </StackPanel>
     </Grid>
 </Window>

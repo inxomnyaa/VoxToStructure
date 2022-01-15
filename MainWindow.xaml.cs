@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using Microsoft.Win32;
 using VoxReader.Interfaces;
@@ -26,38 +29,52 @@ namespace VoxToStructure
             }
 
             var loader = new OpenFileDialog();
+            loader.Multiselect = true;
             loader.Filter = "MagicaVoxel File (*.vox)|*.vox";
-            if (loader.ShowDialog() == true)
-                loadAndConvert(loader.FileName, ComboBox.Text);
+            if (loader.ShowDialog() == true) loadAndConvert(loader.FileNames, ComboBox.Text);
         }
 
-        private void loadAndConvert(string file, string targetFormat)
+        private void loadAndConvert(string[] files, string targetFormat)
         {
-            if (Path.GetExtension(file).Equals(".vox"))
+            var successful = new StringBuilder(files.Length);
+            foreach (var file in files)
             {
-                IVoxFile vox = VoxReader.VoxReader.Read(file);
-                var outputPath = Path.ChangeExtension(file, targetFormat);
-                switch (targetFormat)
+                try
                 {
-                    case ".schematic":
+                    if (Path.GetExtension(file).Equals(".vox"))
                     {
-                        var output = new SchematicFile();
-                        var schematicFile = output.FromVox(vox);
-                        output.Save(schematicFile, outputPath);
-                        MessageBox.Show("Conversion successful, saved to " + outputPath);
-                        break;
+                        IVoxFile vox = VoxReader.VoxReader.Read(file);
+                        var outputPath = Path.ChangeExtension(file, targetFormat);
+                        switch (targetFormat)
+                        {
+                            case ".schematic":
+                            {
+                                var output = new SchematicFile();
+                                var schematicFile = output.FromVox(vox);
+                                output.Save(schematicFile, outputPath);
+                                successful.Append("\n" + outputPath);
+                                break;
+                            }
+                            default:
+                            {
+                                throw new FileFormatException("Format "+targetFormat+" currently not supported");
+                            }
+                        }
                     }
-                    default:
+                    else
                     {
-                        MessageBox.Show("Format currently not supported", "Unsupported format", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
+                        throw new FileFormatException("Unrecognized File " + file);
                     }
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    MessageBox.Show("Conversion failed.\n" + e, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
-            else
-            {
-                MessageBox.Show("Unrecognized File");
-            }
+
+            if (successful.Length > 0)
+                MessageBox.Show("Conversion of " + successful.ToString().Count(c => c == '\n') + "/" + files.Length + " successful, saved to:" + successful);
         }
     }
 }
