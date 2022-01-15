@@ -57,7 +57,7 @@ namespace VoxToStructure
                             }
                             default:
                             {
-                                throw new FileFormatException("Format "+targetFormat+" currently not supported");
+                                throw new FileFormatException("Format " + targetFormat + " currently not supported");
                             }
                         }
                     }
@@ -69,12 +69,12 @@ namespace VoxToStructure
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    MessageBox.Show("Conversion failed.\n" + e, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Conversion of " + file + " failed.\n" + e, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
 
             if (successful.Length > 0)
-                MessageBox.Show("Conversion of " + successful.ToString().Count(c => c == '\n') + "/" + files.Length + " successful, saved to:" + successful);
+                MessageBox.Show("Conversion of " + successful.ToString().Count(c => c == '\n') + "/" + files.Length + " files successful, saved to:" + successful);
         }
     }
 }
